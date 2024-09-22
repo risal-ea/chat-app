@@ -40,11 +40,11 @@ class _ChatScreenState extends State<ChatScreen> {
   //   }
   // }
 
-  void messageStream() async{
-    await for(var snapShot in _firestore.collection('messages').snapshots()){
-      for(var message in  snapShot.docs){
-            print(message.data());
-          }
+  void messageStream() async {
+    await for (var snapShot in _firestore.collection('messages').snapshots()) {
+      for (var message in snapShot.docs) {
+        print(message.data());
+      }
     }
   }
 
@@ -70,6 +70,50 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            StreamBuilder<QuerySnapshot>(
+              stream: _firestore.collection('messages').snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting){
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                // Handle error cases
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Error loading messages'),
+                  );
+                }
+
+                if (snapshot.hasData) {
+                  final messages = snapshot.data?.docs;
+                  List<Text> messageWidgets = [];
+
+                  for (var message in messages!) {
+                    final messageText = message['text'];
+                    final messageSender = message['sender'];
+
+                    final messageWidget = Text(
+                      '$messageSender: $messageText',
+                      style: TextStyle(color: Colors.white, fontSize: 20.0),
+                    );
+                    messageWidgets.add(messageWidget);
+                  }
+                  return Expanded(
+                    child: ListView(
+                      children: messageWidgets,
+                    ),
+                  );
+                }
+
+                // Fallback if no data is available
+                return Center(
+                  child: Text('No messages to display'),
+                );
+              },
+            ),
+
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(

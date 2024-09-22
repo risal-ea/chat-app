@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "509254505273",
+    "project_id": "chat-app-b8051",
+    "storage_bucket": "chat-app-b8051.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:509254505273:android:e91e3c65f9c4384e608ee8",
+        "android_client_info": {
+          "package_name": "com.risal.chat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmMPKnsFCSsnhP6S484-2xSgEZimAZDb0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
